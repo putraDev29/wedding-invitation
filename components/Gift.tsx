@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 export default function GiftSection() {
-  const copyToClipboard = (text) => {
+  const copyToClipboard = (text:any) => {
     navigator.clipboard.writeText(text);
     alert("Nomor rekening disalin!");
   };

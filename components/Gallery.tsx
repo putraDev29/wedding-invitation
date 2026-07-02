@@ -35,7 +35,7 @@ export default function GallerySection() {
   ];
 
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e:any ) => {
       if (e.key === "Escape") setSelectedImage(null);
     };
     window.addEventListener("keydown", handleKeyDown);
