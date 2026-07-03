@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 import { CalendarDays, MapPin } from "lucide-react";
 
 interface Props {
-    guest?: string;
+    slug?: string;
 }
 
-export default function Hero({ guest }: Props) {
+export default function Hero({ slug }: Props) {
     return (
         <section className="relative min-h-screen overflow-hidden bg-[#F8F4EF] flex items-center">
 

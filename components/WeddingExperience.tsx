@@ -38,7 +38,7 @@ export default function WeddingExperience({ guest }: Props) {
       </audio>
 
       <div ref={heroRef}>
-        <Hero guest={guest} />
+        <Hero slug={guest} />
       </div>
 
       <LoveStory />

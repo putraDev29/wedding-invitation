@@ -5,13 +5,13 @@ import { Heart } from "lucide-react";
 
 const stories = [
     {
-        year: "2017",
+        year: "2022",
         title: "Awal Pertemuan",
         description:
             "Atas izin Allah, kami dipertemukan dalam suasana yang sederhana namun penuh makna."
     },
     {
-        year: "2018",
+        year: "2023",
         title: "Menjalin Hubungan",
         description:
             "Dengan niat baik, kami memutuskan untuk saling mengenal dan membangun komitmen menuju ridho-Nya.",

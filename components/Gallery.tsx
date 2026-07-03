@@ -28,8 +28,8 @@ export default function GallerySection() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const images: string[] = [
-        "/images/foto3.jpeg",
-        "/images/foto4.jpeg",
+        "/images/foto9.jpeg",
+        "/images/foto8.jpeg",
         "/images/foto5.jpeg",
         "/images/foto6.jpeg",
     ];

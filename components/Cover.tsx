@@ -28,7 +28,7 @@ export default function Cover({ guest, onOpen }: Props) {
                 className="absolute inset-0"
             >
                 <Image
-                    src="/images/foto1.jpeg"
+                    src="/images/foto7.jpeg"
                     alt="Wedding"
                     fill
                     priority
@@ -65,7 +65,7 @@ export default function Cover({ guest, onOpen }: Props) {
                     transition={{ delay: .4 }}
                     className="font-script mt-8 text-4xl md:text-3xl leading-none"
                 >
-                    Wiwik Puspita Sari
+                    Wiwik Puspitasari
                 </motion.h1>
 
                 <motion.div
