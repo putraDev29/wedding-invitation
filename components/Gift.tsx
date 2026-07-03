@@ -108,44 +108,6 @@ export default function GiftSection() {
           {/* CARD LIST */}
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
 
-            {/* BCA */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "18px",
-                borderRadius: "16px",
-                background: "#fff",
-                border: "1px solid #eee",
-              }}
-            >
-              <div>
-                <p style={{ fontSize: "12px", color: "#aaa" }}>BANK</p>
-                <p style={{ fontSize: "18px", fontWeight: 600 }}>BCA</p>
-                <p style={{ fontSize: "13px", color: "#777" }}>A/N: Nama Pengantin</p>
-              </div>
-
-              <div style={{ textAlign: "right" }}>
-                <p style={{ fontSize: "12px", color: "#aaa" }}>REKENING</p>
-                <p style={{ fontFamily: "monospace", fontSize: "16px" }}>
-                  1234567890
-                </p>
-                <button
-                  onClick={() => copyToClipboard("1234567890")}
-                  style={{
-                    marginTop: "6px",
-                    fontSize: "12px",
-                    color: "#B68D40",
-                    cursor: "pointer",
-                    background: "none",
-                    border: "none",
-                  }}
-                >
-                  Copy
-                </button>
-              </div>
-            </div>
-
             {/* BRI */}
             <div
               style={{
@@ -159,17 +121,17 @@ export default function GiftSection() {
             >
               <div>
                 <p style={{ fontSize: "12px", color: "#aaa" }}>BANK</p>
-                <p style={{ fontSize: "18px", fontWeight: 600 }}>BRI</p>
-                <p style={{ fontSize: "13px", color: "#777" }}>A/N: Nama Pengantin</p>
+                <p style={{ fontSize: "18px", fontWeight: 600 }}>BCA</p>
+                <p style={{ fontSize: "13px", color: "#777" }}>A/N: Moh Yudianto</p>
               </div>
 
               <div style={{ textAlign: "right" }}>
                 <p style={{ fontSize: "12px", color: "#aaa" }}>REKENING</p>
                 <p style={{ fontFamily: "monospace", fontSize: "16px" }}>
-                  0987654321
+                  0391558727
                 </p>
                 <button
-                  onClick={() => copyToClipboard("0987654321")}
+                  onClick={() => copyToClipboard("0391558727")}
                   style={{
                     marginTop: "6px",
                     fontSize: "12px",
@@ -183,48 +145,6 @@ export default function GiftSection() {
                 </button>
               </div>
             </div>
-
-            {/* E-WALLET */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                padding: "18px",
-                borderRadius: "16px",
-                background:
-                  "linear-gradient(to right, #fff, #FAF7F2)",
-                border: "1px solid rgba(212,175,55,0.2)",
-              }}
-            >
-              <div>
-                <p style={{ fontSize: "12px", color: "#aaa" }}>E-WALLET</p>
-                <p style={{ fontSize: "18px", fontWeight: 600 }}>
-                  DANA / OVO / GOPAY
-                </p>
-                <p style={{ fontSize: "13px", color: "#777" }}>A/N: Nama Pengantin</p>
-              </div>
-
-              <div style={{ textAlign: "right" }}>
-                <p style={{ fontSize: "12px", color: "#aaa" }}>NOMOR</p>
-                <p style={{ fontFamily: "monospace", fontSize: "16px" }}>
-                  0812-3456-7890
-                </p>
-                <button
-                  onClick={() => copyToClipboard("0812-3456-7890")}
-                  style={{
-                    marginTop: "6px",
-                    fontSize: "12px",
-                    color: "#B68D40",
-                    cursor: "pointer",
-                    background: "none",
-                    border: "none",
-                  }}
-                >
-                  Copy
-                </button>
-              </div>
-            </div>
-
           </div>
 
           {/* FOOTER */}

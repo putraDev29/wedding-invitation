@@ -2,43 +2,84 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Heart } from "lucide-react";
+import { Send, Heart, Loader2 } from "lucide-react";
 
 type Wish = {
+  id: number;
   name: string;
   message: string;
+  created_at?: string;
 };
 
 export default function RSVPSection() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [wishes, setWishes] = useState<Wish[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [sending, setSending] = useState(false);
+
+  const API = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    const data = localStorage.getItem("wishes");
-
-    if (data) {
-      setWishes(JSON.parse(data));
-    }
+    loadWishes();
   }, []);
 
-  const handleSubmit = () => {
-    if (!name.trim() || !message.trim()) return;
+  async function loadWishes() {
+    try {
+      setLoading(true);
 
-    const newWish = {
-      name,
-      message,
-    };
+      const res = await fetch(`${API}/wishes`, {
+        cache: "no-store",
+      });
 
-    const updated = [newWish, ...wishes];
+      const json = await res.json();
 
-    setWishes(updated);
+      if (json.success) {
+        setWishes(json.data);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-    localStorage.setItem("wishes", JSON.stringify(updated));
+  async function handleSubmit() {
+    if (!name.trim()) return alert("Nama wajib diisi.");
+    if (!message.trim()) return alert("Ucapan wajib diisi.");
 
-    setName("");
-    setMessage("");
-  };
+    try {
+      setSending(true);
+
+      const res = await fetch(`${API}/wishes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          message,
+        }),
+      });
+
+      const json = await res.json();
+
+      if (json.success) {
+        setWishes((prev) => [json.data, ...prev]);
+
+        setName("");
+        setMessage("");
+      } else {
+        alert("Gagal mengirim ucapan");
+      }
+    } catch (err) {
+      console.log(err);
+      alert("Terjadi kesalahan.");
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
     <section
@@ -47,7 +88,7 @@ export default function RSVPSection() {
         padding: "80px 20px",
       }}
     >
-      {/* Background Glow */}
+      {/* Glow */}
       <div
         style={{
           position: "absolute",
@@ -58,8 +99,6 @@ export default function RSVPSection() {
           borderRadius: "50%",
           background: "rgba(212,175,55,.15)",
           filter: "blur(140px)",
-          pointerEvents: "none",
-          zIndex: 0,
         }}
       />
 
@@ -73,18 +112,15 @@ export default function RSVPSection() {
           borderRadius: "50%",
           background: "rgba(212,175,55,.15)",
           filter: "blur(140px)",
-          pointerEvents: "none",
-          zIndex: 0,
         }}
       />
 
-      {/* Content */}
       <div
         style={{
-          position: "relative",
-          zIndex: 10,
           maxWidth: 900,
-          margin: "0 auto",
+          margin: "auto",
+          position: "relative",
+          zIndex: 2,
         }}
       >
         {/* Title */}
@@ -99,8 +135,8 @@ export default function RSVPSection() {
         >
           <p
             style={{
-              letterSpacing: 5,
               color: "#B68D40",
+              letterSpacing: 5,
               fontWeight: 600,
             }}
           >
@@ -109,7 +145,7 @@ export default function RSVPSection() {
 
           <h2
             style={{
-              fontSize: "clamp(32px,5vw,48px)",
+              fontSize: "clamp(34px,5vw,50px)",
               marginTop: 15,
             }}
           >
@@ -120,42 +156,34 @@ export default function RSVPSection() {
         {/* Form */}
         <div
           style={{
-            maxWidth: 600,
-            margin: "0 auto",
             display: "flex",
             flexDirection: "column",
             gap: 15,
-            position: "relative",
-            zIndex: 20,
+            maxWidth: 650,
+            margin: "auto",
           }}
         >
           <input
             type="text"
-            autoComplete="off"
+            placeholder="Nama Anda"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Nama Anda"
             style={{
-              width: "100%",
               padding: 16,
               borderRadius: 14,
               border: "1px solid rgba(212,175,55,.35)",
               outline: "none",
               fontSize: 16,
               background: "#fff",
-              position: "relative",
-              zIndex: 100,
-              touchAction: "manipulation",
             }}
           />
 
           <textarea
             rows={5}
+            placeholder="Tulis ucapan..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Tulis ucapan..."
             style={{
-              width: "100%",
               padding: 16,
               borderRadius: 14,
               border: "1px solid rgba(212,175,55,.35)",
@@ -163,36 +191,43 @@ export default function RSVPSection() {
               resize: "vertical",
               fontSize: 16,
               background: "#fff",
-              position: "relative",
-              zIndex: 100,
-              touchAction: "manipulation",
             }}
           />
 
           <motion.button
-            whileTap={{ scale: 0.97 }}
             whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: .98 }}
+            disabled={sending}
             onClick={handleSubmit}
             style={{
               border: "none",
-              cursor: "pointer",
-              padding: 16,
               borderRadius: 999,
+              padding: 16,
+              cursor: "pointer",
               background: "#D4AF37",
               color: "#000",
-              fontWeight: 600,
+              fontWeight: 700,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               gap: 10,
             }}
           >
-            <Send size={18} />
-            Kirim Ucapan
+            {sending ? (
+              <>
+                <Loader2 size={18} className="animate-spin" />
+                Mengirim...
+              </>
+            ) : (
+              <>
+                <Send size={18} />
+                Kirim Ucapan
+              </>
+            )}
           </motion.button>
         </div>
 
-        {/* Wishes */}
+        {/* List */}
         <div
           style={{
             marginTop: 60,
@@ -203,9 +238,36 @@ export default function RSVPSection() {
             marginInline: "auto",
           }}
         >
-          {wishes.map((wish, index) => (
+          {loading && (
+            <div
+              style={{
+                textAlign: "center",
+                padding: 40,
+              }}
+            >
+              <Loader2
+                className="animate-spin"
+                size={40}
+                color="#B68D40"
+              />
+            </div>
+          )}
+
+          {!loading && wishes.length === 0 && (
+            <div
+              style={{
+                textAlign: "center",
+                color: "#888",
+                padding: 30,
+              }}
+            >
+              Belum ada ucapan.
+            </div>
+          )}
+
+          {wishes.map((wish) => (
             <motion.div
-              key={index}
+              key={wish.id}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -213,8 +275,8 @@ export default function RSVPSection() {
                 padding: 20,
                 borderRadius: 18,
                 border: "1px solid rgba(212,175,55,.2)",
-                background: "rgba(255,255,255,.75)",
-                backdropFilter: "blur(12px)",
+                background: "rgba(255,255,255,.85)",
+                backdropFilter: "blur(10px)",
               }}
             >
               <div
@@ -222,17 +284,18 @@ export default function RSVPSection() {
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
-                  marginBottom: 8,
+                  marginBottom: 10,
                 }}
               >
                 <Heart size={15} color="#B68D40" />
+
                 <strong>{wish.name}</strong>
               </div>
 
               <p
                 style={{
+                  lineHeight: 1.8,
                   color: "#555",
-                  lineHeight: 1.7,
                 }}
               >
                 {wish.message}

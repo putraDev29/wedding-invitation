@@ -71,7 +71,7 @@ export default function Hero({ slug }: Props) {
 
                             <div className="flex items-center justify-center lg:justify-start gap-3">
                                 <MapPin size={18} />
-                                <span>Ds. Labanasem - Kec. Babat</span>
+                                <span>Ds. Labanasem - Kec. Kabat, Banyuwangi</span>
                             </div>
                         </div>
 
